@@ -1,0 +1,19 @@
+# Ignore build artifacts
+*.tar
+*.log
+*.class
+*.jar
+*.war
+
+# Maven build folders
+target/
+build/
+
+# IDE files
+*.iml
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
