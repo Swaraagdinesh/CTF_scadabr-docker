@@ -3,61 +3,96 @@
 
 Você pode baixar a versão mais atual do ScadaBR [aqui](https://github.com/ScadaBR/ScadaBR/releases/latest).
 
-## Sobre
-O ScadaBR é um software _open source_ que oferece todas as funcionalidades de um sistema SCADA (Supervisory Control and Data Acquisition, na sigla em inglês) completo. Softwares do tipo SCADA  existem desde o final dos anos 60, e são peça fundamental na automação de processos que envolvam máquinas, controladores lógicos programáveis (CLPs), acionamentos eletrônicos e sensores.
+# ScadaBR - Open Source SCADA with Docker Support
 
-Entre os principais recursos do ScadaBR estão:
-- Aquisição de dados em mais de 20 protocolos como: Modbus TCP/IP e Serial, OPC, DNP3, IEC, Serial ASCII e HTTP
-- Visualização de dados (variáveis ou "tags") em tempo real
-- Construção de telas gráficas (HMI ou sinópticos)
-- Engine de Alarmes e Eventos parametrizáveis
-- Alarmes sonoros
-- Acesso via browser
-- Engine de scripts para controle, automação, geração de "receitas", etc.
+[![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
 
-**O ScadaBR é um software _open source_ e 100% gratuito.** Com o ScadaBR, o único limite é a sua criatividade.
+This repository provides a **Dockerized version of ScadaBR**, an open-source SCADA (Supervisory Control and Data Acquisition) software system.
 
-## Instalação
-#### Instalação automática
-O ScadaBR possui instaladores oficiais para Windows e Linux. Obtenha-os na [página dos lançamentos](https://github.com/ScadaBR/ScadaBR/releases/latest/).
+---
 
-#### Instalação manual
-Se você quiser (ou precisar) realizar uma instalação manual, siga estes passos:
-- Instale o Java 8 (ou [OpenJDK 8](https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot))
-- Instale o [Tomcat 9](https://tomcat.apache.org/download-90.cgi)
-- Faça o download do [último lançamento](https://github.com/ScadaBR/ScadaBR/releases/latest/)
-- Extraia o arquivo `.war` e copie a pasta extraída para dentro da pasta `webapps/`, no Tomcat
-- Reinicie o Tomcat
+## 🚀 Quick Start (Using Docker)
 
-Obs.: O banco de dados usado por padrão é o Derby. Caso você queira utilizar outro banco de dados (como o MySQL/MariaDB) a configuração a ser realizada consiste em editar o arquivo `/WEB-INF/classes/env.properties` e instalar o ConnectorJ referente a seu gerenciador de banco de dados.
+> Ensure [Docker is installed](https://docs.docker.com/get-docker/) on your system.
 
-#### Requisitos de instalação
-O ScadaBR é um software multiplataforma baseado em Java/Tomcat. Qualquer sistema operacional compatível com o Java 8 e Tomcat 9 está apto para rodar o ScadaBR. Note que os requisitos de hardware podem variar dependendo das suas demandas de uso do ScadaBR. Note também que o instalador para Windows suporta apenas a instalação em Windows Vista ou mais recente.
+### 1. Clone this repository
 
-## ScadaBR e Scada-LTS
+```bash
+git clone https://github.com/Swaraagdinesh/CTF_scadabr-docker.git
+cd CTF_scadabr-docker
 
-Em 2016 o ScadaBR se internacionalizou, dando origem ao projeto [Scada-LTS](https://github.com/SCADA-LTS/Scada-LTS). O Scada-LTS possui um ritmo de desenvolvimento intenso, com diversas melhorias implementadas e novas tecnologias sendo incorporadas à base de código.
+2. Build the Docker image
 
-Atualmente, as versões do ScadaBR são baseadas no código-fonte da última versão _open source_ do Mango M2M. Em breve, porém, lançaremos a série ScadaBR 2.x tendo como novo núcleo o Scada-LTS.
+docker build -t scadabr:latest .
 
-A tabela abaixo mostra os principais recursos presentes nas diferentes versões do ScadaBR e do Scada-LTS
+3. Run the container
 
-Recursos   | ScadaBR 1.0 | ScadaBR 1.1 | ScadaBR 1.2 | Scada-LTS
----------- | ----------- | ----------- | ---------- | ---------
-Versão do Java | 6 | 7 ou 8 (depende da compilação) | 8 | 8 [(ou 11)](https://github.com/SCADA-LTS/Scada-LTS/issues/1822)
-Versão do Tomcat | 6 | 7 | 9 | 7 [(ou 8)](https://github.com/SCADA-LTS/Scada-LTS/issues/1822)
-Suporte a "perfis de usuário" | Não possui | Possui | Possui | Possui
-API REST | Não possui | Não possui | Não possui | Possui
-Suporte a Modbus Serial | Sim | Não | Sim | Não (será implementado no futuro)
-Instaladores | Windows, Linux (não oficial), instalação manual | Sem instaladores oficiais | Windows, Linux (inclusive Raspberry), instalação manual | Instalação via Docker ou instalação manual
+docker run -it --rm -p 8081:8080 scadabr:latest
 
-## Suporte
-No [Fórum do ScadaBR](forum.scadabr.com.br) você pode se informar, aprender e tirar dúvidas sobre como usar o ScadaBR. Visite também nosso [site](http://www.scadabr.com.br/) e nosso [canal no YouTube](https://www.youtube.com/channel/UC42J9rtRGzqwmj5s3BJZG6Q).
+4. Open in browser
 
-Você ou sua empresa precisam de **suporte comercial para o ScadaBR**? Você pode conferir nosso [curso oficial](http://www.scadabr.com.br/curso-scadabr/) ou entrar em contato com um [integrador do ScadaBR](http://forum.scadabr.com.br/c/integradores).
+Visit: http://localhost:8081/ScadaBR
+📦 What's Included
 
-## Bugs conhecidos
-- Você pode enfrentar problemas com o OpenJDK 8 na hora de enviar e-mails. Caso você receba um alarme de erro contendo a mensagem `javax.net.ssl.SSLHandshakeException: No appropriate protocol (protocol is disabled or cipher suites are inappropriate)` edite o arquivo `java.security`, que deve estar em `${JRE}/lib/security/java.security` (no qual `${JRE}` é o caminho para o seu Java Runtime Environment). Neste arquivo, na opção `jdk.tls.disabledAlgorithms` remova `TLSv1` e `TLSv1.1` da lista.
+This repository contains:
 
-## Licença
-O ScadaBR é um software livre e _open source_, disponibilizado sob [GPL 3+](https://www.gnu.org/licenses/gpl-3.0.en.html).
+    Full ScadaBR source code
+
+    A Dockerfile to containerize the application
+
+    Necessary scripts and configuration files
+
+📖 About ScadaBR
+
+ScadaBR is an open-source SCADA system offering features like:
+
+    📡 Data acquisition over 20+ protocols (Modbus, OPC, DNP3, IEC, etc.)
+
+    📊 Real-time data visualization
+
+    🎛️ HMI screen building
+
+    🚨 Configurable alarms and events
+
+    🌐 Browser-based access
+
+    🔧 Scripting engine for automation and logic
+
+    ScadaBR is open source and 100% free. The only limit is your creativity.
+
+🛠 Manual Installation (Non-Docker)
+
+For advanced users or alternative environments:
+
+    Install Java 8 (or OpenJDK 8)
+
+    Install Tomcat 9
+
+    Download the latest ScadaBR .war release
+
+    Extract and place contents inside Tomcat's webapps/ directory
+
+    Restart Tomcat
+
+💡 Default database is Apache Derby. To use MySQL/MariaDB:
+
+    Edit: WEB-INF/classes/env.properties
+
+    Add your JDBC Connector to the classpath
+
+🧪 System Requirements
+
+    Java 8 / OpenJDK 8
+
+    Apache Tomcat 9
+
+    OS: Any system that supports Java (Linux, Windows, macOS)
+
+📚 Resources
+
+    🧠 ScadaBR Forum
+
+📺 ScadaBR YouTube Channel
+
+🌐 Official ScadaBR Website
+
